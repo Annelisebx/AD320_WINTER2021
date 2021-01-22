@@ -1,5 +1,3 @@
-
-
 const http = require('http');
 
 let names = "<p1>Annelise<br>Rachel<br>Savannah</p1>";
@@ -18,13 +16,21 @@ const myListener = function(req, res) {
 
         
         res.write('POST method....');
+        
+        let startResponse = "";
+        req.on('data', changingInto => {
+            startResponse += changingInto;
+        })
+
+        req.on('end', () => {
+            const myObject = JSON.parse(startResponse);
+            const myAnswer = myObject.answer;
+        })
 
         //need to return and respond with JSON object which is html file
-        res.end()
-        
-    }
-    
-
+        res.end()   
+    }  
+    res.end()
 }
 
 //creates server with http
